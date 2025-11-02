@@ -4,6 +4,8 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>Entity.Direccion</class>
     <class>Entity.Jugador</class>
+    <class>Entity.Logro</class>
+    <class>Entity.VideoJuego</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/videojuegojpa?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>

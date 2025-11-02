@@ -187,4 +187,45 @@ public class VideoJuegoDAO {
         }
     }
     
+    /**
+     * Requerimiento: Listar los videojuegos con mayor numero de logros asociados, mostrando su cantidad.
+     */
+    public List<Object[]> listarVideojuegosConMayorNumLogros() {
+        try {
+            return em.createNamedQuery("VideoJuego.findByMaxLogros", Object[].class).getResultList();
+        } catch (Exception e) {
+            System.err.println("Error en listarVideojuegosConMayorNumLogros: " + e.getMessage());
+            return new ArrayList<>(); // Retorna lista vacia
+        }
+    }
+
+    /**
+     * Requerimiento: Listar los videojuegos cuya suma total de puntos de logros supera un valor dado.
+     */
+    public List<VideoJuego> listarVideojuegosPorSumaPuntosMayorA(int valorDado) {
+        try {
+            return em.createNamedQuery("VideoJuego.findByTotalPuntosMayorA", VideoJuego.class)
+                     .setParameter("valorDado", valorDado)
+                     .getResultList();
+        } catch (Exception e) {
+            System.err.println("Error en listarVideojuegosPorSumaPuntosMayorA: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Requerimiento: Mostrar el videojuego con el logro mas alto en puntos.
+     */
+    public VideoJuego obtenerVideojuegoConLogroMasAlto() {
+        try {
+            List<VideoJuego> resultados = em.createNamedQuery("VideoJuego.findByLogroMasAlto", VideoJuego.class)
+                                            .setMaxResults(1) // Solo necesitamos el primero
+                                            .getResultList();
+            return resultados.isEmpty() ? null : resultados.get(0);
+        } catch (Exception e) {
+            System.err.println("Error en obtenerVideojuegoConLogroMasAlto: " + e.getMessage());
+            return null;
+        }
+    }
+    
 }

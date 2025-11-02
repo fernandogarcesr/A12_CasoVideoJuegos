@@ -31,9 +31,16 @@ import java.util.Set;
     @NamedQuery(name = "VideoJuego.buscarSinJugadores", query = "SELECT v FROM VideoJuego v WHERE v.logros IS EMPTY"),
     @NamedQuery(name = "VideoJuego.buscarConLogrosMayorA", query = "SELECT DISTINCT v FROM VideoJuego v JOIN v.logros l WHERE l.puntos > :puntosMinimos"),
     @NamedQuery(name = "VideoJuego.actualizarPuntajePorNombre", query = "UPDATE VideoJuego v SET v.puntaje = :nuevoPuntaje WHERE v.desarrolladora = :nombre"),
-    @NamedQuery(name = "VideoJuego.eliminarPorNombre", query = "DELETE FROM VideoJuego v WHERE v.desarrolladora = :nombre")
+    @NamedQuery(name = "VideoJuego.eliminarPorNombre", query = "DELETE FROM VideoJuego v WHERE v.desarrolladora = :nombre"),
+    @NamedQuery(name = "VideoJuego.findByMaxLogros",
+            query = "SELECT v, COUNT(l) AS numLogros FROM VideoJuego v JOIN v.logros l GROUP BY v ORDER BY numLogros DESC"),
+    @NamedQuery(name = "VideoJuego.findByTotalPuntosMayorA",
+            query = "SELECT v FROM VideoJuego v JOIN v.logros l GROUP BY v HAVING SUM(l.puntos) > :valorDado"),
+    @NamedQuery(name = "VideoJuego.findByLogroMasAlto",
+            query = "SELECT v FROM VideoJuego v JOIN v.logros l ORDER BY l.puntos DESC")
 })
-public class VideoJuego implements Serializable{
+public class VideoJuego implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
